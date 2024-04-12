@@ -38,21 +38,21 @@ const displayTodos = (data) => {
   const todoList = data || todos;
   todosBody.innerHTML = "";
   if (todoList.length === 0) {
-    todosBody.innerHTML = "<tr><td colspan='4'>No task found</td></tr>";
+    todosBody.innerHTML = "<tr><td colspan='4'>هیچ عنوانی یافت نشد</td></tr>";
     return;
   }
   todoList.forEach((todo) => {
     todosBody.innerHTML += `
     <tr>
     <td>${todo.task}</td>
-    <td>${todo.date || "No date"}</td>
-    <td>${todo.completed ? "Completed" : "Pending"}</td>
+    <td>${todo.date || "بدون تاریخ"}</td>
+    <td>${todo.completed ? "تکمیل شده" : "در حال انجام"}</td>
     <td>
-    <button onclick="editHandler('${todo.id}')">Edit</button>
+    <button onclick="editHandler('${todo.id}')">ویرایش</button>
     <button onclick="toggleHandler('${todo.id}')">${
-      todo.completed ? "Undo" : "Do"
+      todo.completed ? "قبل" : "بعد"
     }</button>
-    <button onclick="deleteHandler('${todo.id}')">Delete</button>
+    <button onclick="deleteHandler('${todo.id}')">حذف</button>
     </td>
     </tr>
     `;
@@ -75,9 +75,9 @@ const addHandler = () => {
     taskInput.value = "";
     dateInput.value = "";
     console.log(todos);
-    showAlert("Todo added successfully", "success");
+    showAlert("Tتودو با موفقیت اضافه شد", "success");
   } else {
-    showAlert("please enter a todo", "error");
+    showAlert("لطفا تودو را کامل وارد کنید", "error");
   }
   displayTodos();
 };
@@ -87,9 +87,9 @@ const deleteAllHandler = () => {
     todos = [];
     saveToLocalStorage();
     displayTodos();
-    showAlert("All todos cleared successfully", "success");
+    showAlert("همه تودو ها حذف گردید", "success");
   } else {
-    showAlert("no todos to clear", "error");
+    showAlert("هیچ تودویی برای حذف کردن وجود ندارد", "error");
   }
 };
 
@@ -99,34 +99,16 @@ const deleteHandler = (id) => {
   todos = newTodos;
   saveToLocalStorage();
   displayTodos();
-  showAlert("Todo deleted successfully", "success");
+  showAlert("حذف شد", "success");
 };
 
 const toggleHandler = (id) => {
-  // const newTodos = todos.map((todo) => {
-  //   if (todo.id === id) {
-  //     // return {
-  //     //   id: todo.id,
-  //     //   task: todo.task,
-  //     //   date: todo.date,
-  //     //   completed: !todo.completed,
-  //     // };
-  //     return {
-  //       ...todo,
-  //       completed: !todo.completed,
-  //     };
-  //   } else {
-  //     return todo;
-  //   }
-  // });
-  // todos = newTodos;
-  // console.log(todos);
   const todo = todos.find((todo) => todo.id === id);
   todo.completed = !todo.completed;
   console.log(todo);
   saveToLocalStorage();
   displayTodos();
-  showAlert("Todo status changed successfully", "success");
+  showAlert("وضعیت تودو تغییر کرد", "success");
 };
 
 const editHandler = (id) => {
@@ -149,7 +131,7 @@ const applyEditHandler = (event) => {
   editButton.style.display = "none";
   saveToLocalStorage();
   displayTodos();
-  showAlert("Todo edited successfully", "success");
+  showAlert("تودو با موفقیت ویرایش شد", "success");
 };
 
 const filterHandler = (event) => {
